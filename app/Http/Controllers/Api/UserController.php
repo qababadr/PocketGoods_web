@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\WishlistResource;
 use Exception;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Database\QueryException;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
+use App\Models\Product;
+use App\Models\Wishlist;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\QueryException;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -84,5 +89,84 @@ class UserController extends Controller
         return response([
             "data" => new UserResource($user)
         ], Response::HTTP_OK);
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            if ($user) {
+                $user->tokens()->delete();
+
+                try {
+                    $request->session()->invalidate();
+                    $request->session()->regenerate();
+                } catch (Exception $exp) {
+                    Log::error("Session logout failed: {$exp->getMessage()}");
+                }
+
+                return response()->json([
+                    "data" => true
+                ], Response::HTTP_OK);
+            }
+        } catch (Exception $exp) {
+            return response()->json([
+                "error_message" => __("errors.logout_error")
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function addOrDeleteWishlistItem(Product $product)
+    {
+        try {
+            $user = auth()->user();
+
+            $productInWishlist = $user->wishlistItem($product->id)
+                ->first();
+
+            if ($productInWishlist == null) {
+                $wishlistItem = Wishlist::create([
+                    'product_id',
+                    'user_id'
+                ]);
+
+                return response([
+                    'data' => [
+                        'wishlist_itemL_id' => $wishlistItem->id,
+                        'in_wishlist' => true,
+                        'product' => new ProductResource($product)
+                    ]
+                ], Response::HTTP_OK);
+            } else {
+                Wishlist::where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->delete();
+
+                return response([
+                    'data' => [
+                        'wishlist_itemL_id' => -1,
+                        'in_wishlist' => false,
+                        'product' => null
+                    ]
+                ], Response::HTTP_OK);
+            }
+        } catch (Exception $exp) {
+            return response([
+                'error_message' => __('errors.unexpected_error')
+            ], Response::HTTP_OK);
+        }
+    }
+
+    public function getUserWishlist()
+    {
+        $user = Auth::user();
+
+        $wishlist = $user->wishlist()
+            ->with('product.media')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return WishlistResource::collection($wishlist);
     }
 }
