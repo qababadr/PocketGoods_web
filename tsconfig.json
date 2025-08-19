@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "useDefineForClassFields": true,
+      "module": "ESNext",
+      "lib": ["ES6", "ES2020", "DOM", "DOM.Iterable", "ESNext"],
+      "types": ["reflect-metadata", "vuetify", "vite/client", "cypress"],
+      "skipLibCheck": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "moduleResolution": "node",
+      "allowImportingTsExtensions": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true, 
+      "noEmit": true,
+      "jsx": "preserve",
+      "strict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noFallthroughCasesInSwitch": true,
+      "baseUrl": "./",
+      "paths": {
+      "@src/*": ["resources/js/src/*"],
+      "@js/*": ["resources/js/*"],
+      "@css/*": ["resources/css/*"],
+      "@/*": ["resources/*"]
+    },
+      "composite": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
+    },
+    "exclude": ["node_modules"],
+  }
+  
