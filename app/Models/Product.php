@@ -51,6 +51,6 @@ class Product extends Model implements HasMedia
     {
         return $this->getMedia(self::PRODUCT_IMAGES)
             ->first()
-            ->getUrl(self::MEDIA_CONVERSION);
+            ?->getUrl(self::MEDIA_CONVERSION);
     }
 }

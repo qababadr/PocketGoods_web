@@ -127,8 +127,8 @@ class UserController extends Controller
 
             if ($productInWishlist == null) {
                 $wishlistItem = Wishlist::create([
-                    'product_id',
-                    'user_id'
+                    'product_id' => $product->id,
+                    'user_id' => $user->id
                 ]);
 
                 return response([
