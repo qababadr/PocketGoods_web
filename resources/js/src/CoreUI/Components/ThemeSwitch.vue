@@ -12,7 +12,7 @@ const emit = defineEmits<{
         hide-details color="primary" class="dark-mode-icon-switch">
         <template #thumb>
             <v-icon>
-                {{ props.isDarkTheme ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}
+                {{ props.isDarkTheme ? 'mdi-moon-waning-crescent' : 'mdi-white-balance-sunny' }}
             </v-icon>
         </template>
     </v-switch>

@@ -7,12 +7,18 @@ const snackbarController = useSnackbarControllerStore();
     <v-snackbar v-model="snackbarController.isVisible" :timeout="snackbarController.autoHideDuration"
         :color="snackbarController.severity" :elevation="snackbarController.elevation"
         :vertical="snackbarController.vertical" :location="snackbarController.position">
-        <component :is="snackbarController.content" v-bind="snackbarController.contentProps">
-            <template v-slot:actions>
+        <v-row class="align-center" no-gutters>
+            <!-- Column 1: Content -->
+            <v-col>
+                <component :is="snackbarController.content" v-bind="snackbarController.contentProps" />
+            </v-col>
+
+            <!-- Column 2: Close button -->
+            <v-col class="d-flex justify-end" cols="auto">
                 <v-btn color="white" variant="text" @click="snackbarController.hide()">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-            </template>
-        </component>
+            </v-col>
+        </v-row>
     </v-snackbar>
 </template>

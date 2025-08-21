@@ -16,7 +16,7 @@ const emits = defineEmits(["onClose", "onProcessing"]);
                 <v-toolbar dark color="warning">
                     <v-toolbar-title>Confirmation</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn variant="text" @click="emits('onClose')">
+                    <v-btn variant="text" @click="emits('onClose')" color="white">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-toolbar>
@@ -34,7 +34,7 @@ const emits = defineEmits(["onClose", "onProcessing"]);
                                     Close
                                 </v-btn>
                                 <v-btn type="submit" :loading="props.isProcessing" :disabled="props.isProcessing"
-                                    class="ml-2" @click="emits('onClose')">
+                                    class="ml-2" @click="emits('onProcessing')">
                                     {{ props.actionButtonLabel }}
                                 </v-btn>
                             </div>

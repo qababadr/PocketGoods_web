@@ -20,7 +20,7 @@ const router = useRouter();
             </div>
             <div class="pb-6">
                 <v-btn @click="router.push({ name: Constants.SCREENS.HomeScreen })" prepend-icon="mdi-home"
-                    class="px-16 pb-16">
+                    class="px-16">
                     Return Home
                 </v-btn>
             </div>
