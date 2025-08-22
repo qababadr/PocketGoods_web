@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ env("APP_NAME") }}</title>
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favicons/apple-icon-57x57.png') }}">
-    <link rel="manifest" href="{{ asset('imgs/favicons/manifest.json') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/favicons/favicon-96x96.png') }}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicons/favicon.svg') }} " />
     <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}" />
@@ -27,7 +26,7 @@
     <script>
         window.global = window;
     </script>
-    @vite('resources/js/src/main.ts')
+
 </body>
 
 </html>

@@ -1,2 +1,2 @@
-export * from "./inversify.config";
 export * from "./serviceIdentifier";
+export * from "./inversify.config";

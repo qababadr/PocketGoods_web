@@ -1,10 +1,15 @@
+import { ProductPreview } from "@src/Core";
 import { defineStore } from "pinia";
+import { delay, productPreviews } from "./helper";
 
 type GlobalStoreState = {
     isDialogOpen: boolean;
     isProcessing: boolean;
     theme: "lightTheme" | "darkTheme";
     isDarkTheme: boolean;
+    inWishlist: boolean;
+    suggestedProducts: ProductPreview[];
+    searchQuery: string;
 };
 
 export const useGlobalStore = defineStore("GlobalStore", {
@@ -14,6 +19,9 @@ export const useGlobalStore = defineStore("GlobalStore", {
             isProcessing: false,
             theme: "lightTheme",
             isDarkTheme: false,
+            inWishlist: false,
+            suggestedProducts: [],
+            searchQuery: "",
         };
     },
     getters: {},
@@ -30,6 +38,25 @@ export const useGlobalStore = defineStore("GlobalStore", {
         setIsDarkTheme(isDarkTheme: boolean) {
             this.isDarkTheme = isDarkTheme;
             this.theme = isDarkTheme ? "darkTheme" : "lightTheme";
+        },
+        toggleWishlist() {
+            this.inWishlist = !this.inWishlist;
+        },
+        setSearchQuery(query: string) {
+            this.searchQuery = query;
+        },
+        async searchSuggestions() {
+            this.isProcessing = true;
+
+            await delay(1500);
+
+            this.suggestedProducts = productPreviews.filter((product) =>
+                product.title
+                    .toLocaleLowerCase()
+                    .includes(this.searchQuery.toLocaleLowerCase())
+            );
+
+            this.isProcessing = false;
         },
     },
 });

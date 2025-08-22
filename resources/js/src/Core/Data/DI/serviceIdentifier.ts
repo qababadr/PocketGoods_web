@@ -1,1 +1,19 @@
-export const ServiceIdentifier = {};
+export const ServiceIdentifier = {
+    SearchRepository: Symbol.for("SearchRepository"),
+    AuthenticationRepository: Symbol.for("AuthenticationRepository"),
+    GetAuthenticatedUserUseCase: Symbol.for("GetAuthenticatedUserUseCase"),
+    LoginUseCase: Symbol.for("LoginUseCase"),
+    LogoutUseCase: Symbol.for("LogoutUseCase"),
+    RegisterUseCase: Symbol.for("RegisterUseCase"),
+    AuthenticationUseCases: Symbol.for("AuthenticationUseCases"),
+    ProductRepository: Symbol.for("ProductRepository"),
+    ProductUseCases: Symbol.for("ProductUseCases"),
+    GetProductsUseCase: Symbol.for("GetProductsUseCase"),
+    GetProductUseCase: Symbol.for("GetProductUseCase"),
+    SearchProductsUseCase: Symbol.for("SearchProductsUseCase"),
+    GetSuggestedProductsUseCase: Symbol.for("GetSuggestedProductsUseCase"),
+    WishlistRepository: Symbol.for("WishlistRepository"),
+    ToggleWishlistUseCase: Symbol.for("ToggleWishlistUseCase"),
+    GetEntireWishlistUseCase: Symbol.for("GetEntireWishlistUseCase"),
+    WishlistUseCases: Symbol.for("WishlistUseCases"),
+};

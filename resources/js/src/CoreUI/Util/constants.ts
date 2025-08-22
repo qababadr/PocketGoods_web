@@ -9,5 +9,6 @@ export const Constants = {
         "Start exploring, start saving , the best deals shouldn't be hard to find.",
     SCREENS: {
         HomeScreen: "home_screen",
+        ProductDetailScreen: "product_detail_screen",
     },
 };

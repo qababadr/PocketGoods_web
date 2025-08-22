@@ -192,6 +192,7 @@ class ProductSeeder extends Seeder
                     ->sanitizingFileName(function ($fileName) {
                         return strtolower(str_replace(['#', '/', '\\', ' '], '-', $fileName));
                     })
+                    ->preservingOriginal()
                     ->toMediaCollection(Product::PRODUCT_IMAGES);
             }
         }

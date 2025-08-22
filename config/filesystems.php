@@ -48,8 +48,8 @@ return [
         ],
         'media' => [
             'driver' => 'local',
-            'root' => public_path('media'),
-            'url' => env('APP_URL') . '/media'
+            'root'   => public_path('media'),
+            'url'    => env('APP_URL') . '/media',
         ],
         's3' => [
             'driver' => 's3',

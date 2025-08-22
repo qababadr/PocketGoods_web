@@ -3,5 +3,11 @@
     "compilerOptions": {
       "types": ["vite/client"],
     },
-    "include": ["**/*.ts", "**/*.vue", "./sandbox/**/*.ts"]
+    "include": [
+      "**/*.ts",
+      "**/*.vue",
+      "./sandbox/**/*.ts",
+      "../resources/js/**/*.ts",
+      "../resources/js/**/*.vue"
+    ]
 }
