@@ -6,6 +6,7 @@ import {
     ServiceIdentifier,
     stringAvatar,
     User,
+    WishlistItem,
 } from "@src/Core";
 import { AuthenticationUseCases } from "../Domain/UseCase";
 
@@ -37,8 +38,43 @@ export const useAuthStore = defineStore("AuthStore", {
             if (this.authenticatedUser == null) return "";
             return stringAvatar(this.authenticatedUser.name.toUpperCase());
         },
+        inWishlist: (state: AuthStoreState) => (productId: number) => {
+            return (
+                state.authenticatedUser?.wishlist.find(
+                    (item: WishlistItem) => item.productId === productId
+                ) !== undefined
+            );
+        },
     },
     actions: {
+        deleteFromWishlist(productId: number) {
+            if (!this.authenticatedUser) return;
+
+            const updatedWishlist = this.authenticatedUser.wishlist.filter(
+                (item) => item.productId !== productId
+            );
+
+            this.$patch({
+                authenticatedUser: {
+                    ...this.authenticatedUser,
+                    wishlist: updatedWishlist,
+                },
+            });
+        },
+        addWishlistItem(productId: number, insertedWishlistItemId: number) {
+            if (!this.authenticatedUser) return;
+
+            const updatedWishlist = [
+                ...(this.authenticatedUser.wishlist ?? []),
+                new WishlistItem(insertedWishlistItemId, productId),
+            ];
+            this.$patch({
+                authenticatedUser: {
+                    ...this.authenticatedUser,
+                    wishlist: updatedWishlist,
+                },
+            });
+        },
         async check(): Promise<void> {
             const useCases = container.get<AuthenticationUseCases>(
                 ServiceIdentifier.AuthenticationUseCases
