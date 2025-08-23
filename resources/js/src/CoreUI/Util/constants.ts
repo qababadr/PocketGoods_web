@@ -10,5 +10,6 @@ export const Constants = {
     SCREENS: {
         HomeScreen: "home_screen",
         ProductDetailScreen: "product_detail_screen",
+        WishlistManagerScreen: "wishlist_manager_screen",
     },
 };

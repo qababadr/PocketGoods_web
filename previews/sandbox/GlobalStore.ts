@@ -1,6 +1,6 @@
-import { ProductPreview } from "@src/Core";
+import { ProductPreview, stringAvatar, User } from "@src/Core";
 import { defineStore } from "pinia";
-import { delay, productPreviews } from "./helper";
+import { delay, productPreviews, mockUser } from "./helper";
 
 type GlobalStoreState = {
     isDialogOpen: boolean;
@@ -10,6 +10,7 @@ type GlobalStoreState = {
     inWishlist: boolean;
     suggestedProducts: ProductPreview[];
     searchQuery: string;
+    authenticatedUser: User;
 };
 
 export const useGlobalStore = defineStore("GlobalStore", {
@@ -22,9 +23,16 @@ export const useGlobalStore = defineStore("GlobalStore", {
             inWishlist: false,
             suggestedProducts: [],
             searchQuery: "",
+            authenticatedUser: mockUser,
         };
     },
-    getters: {},
+    getters: {
+        userInitials(): string {
+            return stringAvatar(
+                this.authenticatedUser.name
+            ).toLocaleUpperCase();
+        },
+    },
     actions: {
         openDialog() {
             this.isDialogOpen = true;

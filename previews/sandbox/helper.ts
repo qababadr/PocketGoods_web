@@ -1,8 +1,32 @@
-import { ProductPreview, Image, Constants, Product } from "@src/Core";
+import {
+    ProductPreview,
+    Image,
+    Constants,
+    Product,
+    User,
+    WishlistItem,
+} from "@src/Core";
 
 export function delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export const mockUser = new User(6, "badr qaba", "backupbadr@email.com", null, [
+    new WishlistItem(
+        7,
+        3,
+        6,
+        "2025-04-29T04:07:42.000000Z",
+        "2025-04-29T04:07:42.000000Z"
+    ),
+    new WishlistItem(
+        12,
+        1,
+        6,
+        "2025-04-29T04:30:38.000000Z",
+        "2025-04-29T04:30:38.000000Z"
+    ),
+]);
 
 export const productPreviews: ProductPreview[] = [
     new ProductPreview(

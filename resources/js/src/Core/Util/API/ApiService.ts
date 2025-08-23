@@ -9,6 +9,12 @@ interface ApiServiceProps {
 }
 
 export class ApiService {
+    private static readonly csrfCookieEndPoint: string = "/sanctum/csrf-cookie";
+
+    static async initCSRFCookie() {
+        await this.axiosInstance.get(this.csrfCookieEndPoint);
+    }
+
     private static readonly axiosInstance = axios.create({
         baseURL: Constants.Base_URL,
         withCredentials: true,

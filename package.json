@@ -16,6 +16,7 @@
         "@types/webfontloader": "^1.6.38",
         "@vanroeybe/vue-inversify-plugin": "^1.1.3",
         "@vitejs/plugin-vue": "^6.0.1",
+        "@vueuse/core": "^13.7.0",
         "axios": "^1.11.0",
         "concurrently": "^9.0.1",
         "cypress": "^14.5.4",
