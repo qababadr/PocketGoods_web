@@ -5,9 +5,14 @@ import { useProductStore } from './ProductStore';
 import { useRoute } from 'vue-router';
 import { SnackbarSeverity, useSnackbarControllerStore } from '@src/CoreUI/Components';
 import Message from '@src/CoreUI/Components/Message.vue';
+import { useAuthStore } from '@src/AuthenticationFeature/Auth/AuthStore';
+import { useWishlistManagerStore } from '@src/WishlistFeature/Presentation/Screen/WishlistManagerStore';
+
 const route = useRoute()
 const productStore = useProductStore();
 const snackbarController = useSnackbarControllerStore()
+const auth = useAuthStore()
+const wishlistStore = useWishlistManagerStore()
 
 onMounted(() => {
     productStore.loadProduct({
@@ -23,15 +28,41 @@ onMounted(() => {
 });
 
 const wishlistButtonIcon = computed(() => {
+    if (productStore.product) {
+        return auth.inWishlist(productStore.product.id)
+            ? 'mdi-heart-minus' : 'mdi-heart-plus'
+    }
     return 'mdi-heart-plus'
 });
 
 const wishlistButtonLabel = computed(() => {
-    return 'Add to wishlist'
+    if (productStore.product) {
+        return auth.inWishlist(productStore.product.id)
+            ? 'remove from wishlist' : 'add to wishlist'
+    }
+    return 'add to wishlist'
 });
 
 function onToggleWishlist(productId: number) {
-
+    wishlistStore.toggleWishlist({
+        productId: productId,
+        onAdded(insertedWishlistId) {
+            auth.addWishlistItem(productId, insertedWishlistId)
+            snackbarController
+                .setSeverity(SnackbarSeverity.Success)
+                .setContentProps({ text: 'The product has been added successfully to your wishlist' })
+                .setContent(Message)
+                .show()
+        },
+        onRemoved() {
+            auth.deleteFromWishlist(productId)
+            snackbarController
+                .setSeverity(SnackbarSeverity.Success)
+                .setContentProps({ text: 'The product has been removed successfully from your wishlist' })
+                .setContent(Message)
+                .show()
+        },
+    })
 }
 
 </script>

@@ -1,11 +1,69 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useProductStore } from './ProductStore';
 import { Constants } from '@src/CoreUI/Util/constants';
 import ProductCard from '../Components/ProductCard.vue';
-const router = useRouter()
-function onToggleWishlist(productId: number) {
+import { useWishlistManagerStore } from '@src/WishlistFeature/Presentation/Screen/WishlistManagerStore';
+import { useAuthStore } from '@src/AuthenticationFeature/Auth/AuthStore';
+import { SnackbarSeverity, useSnackbarControllerStore } from '@src/CoreUI/Components';
+import Message from '@src/CoreUI/Components/Message.vue';
+import { computed, watch } from 'vue';
 
+const router = useRouter()
+const wishlistStore = useWishlistManagerStore()
+const auth = useAuthStore()
+const snackbarController = useSnackbarControllerStore()
+const route = useRoute()
+
+const searchQuery = computed(() => {
+    return (route.query.searchQuery as string) ?? null
+})
+
+watch(
+    [searchQuery, () => productStore.currentPage],
+    (
+        [_newSearchQuery, _currentPage],
+        [_prevQuery, _prevPage]
+    ) => {
+        if (searchQuery.value) {
+            productStore.searchProducts({
+                searchQuery: searchQuery.value,
+                onPaginationError() {
+                    snackbarController
+                        .setSeverity(SnackbarSeverity.Success)
+                        .setContentProps({ text: 'An error occurred while loading products' })
+                        .setContent(Message)
+                        .show()
+                },
+            })
+        }
+    },
+    {
+        deep: true,
+        immediate: true
+    }
+)
+
+function onToggleWishlist(productId: number) {
+    wishlistStore.toggleWishlist({
+        productId: productId,
+        onAdded(insertedWishlistId) {
+            auth.addWishlistItem(productId, insertedWishlistId)
+            snackbarController
+                .setSeverity(SnackbarSeverity.Success)
+                .setContentProps({ text: 'The product has been added successfully to your wishlist' })
+                .setContent(Message)
+                .show()
+        },
+        onRemoved() {
+            auth.deleteFromWishlist(productId)
+            snackbarController
+                .setSeverity(SnackbarSeverity.Success)
+                .setContentProps({ text: 'The product has been removed successfully from your wishlist' })
+                .setContent(Message)
+                .show()
+        },
+    })
 }
 
 const productStore = useProductStore()

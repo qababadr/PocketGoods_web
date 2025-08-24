@@ -11,5 +11,12 @@ export const Constants = {
         HomeScreen: "home_screen",
         ProductDetailScreen: "product_detail_screen",
         WishlistManagerScreen: "wishlist_manager_screen",
+        ProductSearchResultScreen: "product_search_result_screen",
+        Page401: "page_401",
+        Page404: "page_404",
+    },
+    Middleware: {
+        GUEST: "guest",
+        AUTH: "auth",
     },
 };

@@ -16,6 +16,8 @@ type ProductStoreState = {
     readonly paginationResponse: PaginationResponse<ProductPreview> | undefined;
     readonly currentPage: number;
     readonly searchQuery: string;
+    readonly isSearching: boolean;
+    readonly suggestedProducts: ProductPreview[];
 };
 
 export const useProductStore = defineStore("ProductStore", {
@@ -27,6 +29,8 @@ export const useProductStore = defineStore("ProductStore", {
             paginationResponse: undefined,
             currentPage: 1,
             searchQuery: "",
+            isSearching: false,
+            suggestedProducts: [],
         };
     },
     getters: {
@@ -40,6 +44,30 @@ export const useProductStore = defineStore("ProductStore", {
         },
     },
     actions: {
+        setCurrentPage(page: number) {
+            this.$patch({ currentPage: page });
+        },
+        async getProducts(params: { onPaginationError: () => void }) {
+            this.$patch({ isPageLoading: true });
+            const { onPaginationError } = params;
+            try {
+                const useCases = container.get<ProductUseCases>(
+                    ServiceIdentifier.ProductUseCases
+                );
+
+                const paginationData = await useCases.getProducts(
+                    this.currentPage
+                );
+
+                this.$patch({ paginationResponse: paginationData });
+            } catch (error) {
+                if (error instanceof ApiError) {
+                    onPaginationError();
+                }
+            } finally {
+                this.$patch({ isPageLoading: false });
+            }
+        },
         async searchProducts(params: {
             searchQuery: string;
             onPaginationError: () => void;
@@ -82,6 +110,22 @@ export const useProductStore = defineStore("ProductStore", {
             } catch (error) {
                 if (error instanceof ApiError) {
                     onError();
+                }
+            }
+        },
+        async searchSuggestions() {
+            if (this.searchQuery !== "") {
+                try {
+                    this.$patch({ isSearching: true });
+                    const useCases = container.get<ProductUseCases>(
+                        ServiceIdentifier.ProductUseCases
+                    );
+                    const suggestions = await useCases.getSuggestedProducts(
+                        this.searchQuery
+                    );
+                    this.$patch({ suggestedProducts: suggestions });
+                } finally {
+                    this.$patch({ isSearching: false });
                 }
             }
         },

@@ -26,7 +26,7 @@
     <script>
         window.global = window;
     </script>
-
+    @vite('resources/js/src/main.ts')
 </body>
 
 </html>
