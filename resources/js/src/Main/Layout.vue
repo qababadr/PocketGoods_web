@@ -45,16 +45,14 @@ function onSearchButtonClick() {
 }
 
 function onSuggestionClick(productId: number, productTitle: string) {
+    productStore.$patch({ searchQuery: productTitle })
     try {
-        productStore.$patch({ searchQuery: productTitle })
         router.push({
             name: Constants.SCREENS.ProductDetailScreen,
-            params: {
-                id: productId
-            }
+            params: { id: productId },
         })
     } catch {
-        return
+        return;
     }
 }
 

@@ -15,6 +15,8 @@ const auth = useAuthStore()
 const snackbarController = useSnackbarControllerStore()
 const route = useRoute()
 
+const productStore = useProductStore()
+
 const searchQuery = computed(() => {
     return (route.query.searchQuery as string) ?? null
 })
@@ -23,26 +25,27 @@ watch(
     [searchQuery, () => productStore.currentPage],
     (
         [_newSearchQuery, _currentPage],
-        [_prevQuery, _prevPage]
+        [_prevQuery, _prePage]
     ) => {
         if (searchQuery.value) {
             productStore.searchProducts({
                 searchQuery: searchQuery.value,
                 onPaginationError() {
-                    snackbarController
-                        .setSeverity(SnackbarSeverity.Success)
-                        .setContentProps({ text: 'An error occurred while loading products' })
+                    snackbarController.setSeverity(SnackbarSeverity.Error)
+                        .setContentProps({
+                            text: 'An error occurred while getting latest deals'
+                        })
                         .setContent(Message)
                         .show()
                 },
-            })
+            });
         }
     },
     {
         deep: true,
-        immediate: true
+        immediate: true,
     }
-)
+);
 
 function onToggleWishlist(productId: number) {
     wishlistStore.toggleWishlist({
@@ -66,7 +69,6 @@ function onToggleWishlist(productId: number) {
     })
 }
 
-const productStore = useProductStore()
 </script>
 <template>
     <v-container>

@@ -1,7 +1,9 @@
 import { useAuthStore } from "@src/AuthenticationFeature/Auth/AuthStore";
 import { Constants } from "@src/CoreUI/Util/constants";
-import Layout from "../Layout.vue";
-import HomeScreen from "../HomeScreen.vue";
+
+const Layout = () => import("../Layout.vue");
+
+const HomeScreen = () => import("../HomeScreen.vue");
 
 const ProductDetailScreen = () =>
     import("@src/ProductFeature/Presentation/Screen/ProductDetailScreen.vue");
@@ -24,7 +26,7 @@ export const routes = [
     {
         path: "/",
         component: Layout,
-        Children: [
+        children: [
             {
                 name: Constants.SCREENS.HomeScreen,
                 path: "/",

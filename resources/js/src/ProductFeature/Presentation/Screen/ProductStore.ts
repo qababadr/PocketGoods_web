@@ -108,6 +108,7 @@ export const useProductStore = defineStore("ProductStore", {
 
                 this.$patch({ product: product, isPageLoading: false });
             } catch (error) {
+                console.log(error);
                 if (error instanceof ApiError) {
                     onError();
                 }

@@ -1,0 +1,83 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Sunglasses",
+      "category": "Accessories",
+      "price": 20.99,
+      "thumbnail": "/media/1/conversions/aviator-sunglasses-2592111_1280_image-by-sandeep-handa-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Parfum",
+      "category": "Beauty",
+      "price": 49.99,
+      "thumbnail": "/media/3/conversions/fragonard-1007437_1280image-by-nathaly-durepaire-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Headphones",
+      "category": "Electronics",
+      "price": 129.99,
+      "thumbnail": "/media/5/conversions/headphones-814055_1280image-by-stephanie-robertson-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Makeup",
+      "category": "Beauty",
+      "price": 19.99,
+      "thumbnail": "/media/7/conversions/image-by-aerngaoey-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Wrist Watch",
+      "category": "Accessories",
+      "price": 149.99,
+      "thumbnail": "/media/9/conversions/image-by-emamul-andalib-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Coffee",
+      "category": "Grocery",
+      "price": 9.99,
+      "thumbnail": "/media/11/conversions/coffee-5568374-1280-thumbnail.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Lipstick",
+      "category": "Beauty",
+      "price": 24.99,
+      "thumbnail": "/media/13/conversions/image-by-steve-jang-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Microphone",
+      "category": "Electronics",
+      "price": 79.99,
+      "thumbnail": "/media/15/conversions/image-by-la88au88ra-from-pixabay-thumbnail.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Washing Machine Liquid",
+      "category": "Home",
+      "price": 7.99,
+      "thumbnail": "/media/17/conversions/image-by-martins2018-from-pixabay-thumbnail.jpg"
+    }
+  ],
+  "links": {
+    "first": "/api/products?page=1",
+    "last": "/api/products?page=2",
+    "prev": null,
+    "next": "/api/products?page=2"
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 2,
+    "path": "/api/products",
+    "per_page": 9,
+    "to": 9,
+    "total": 12,
+    "links": []
+  }
+}

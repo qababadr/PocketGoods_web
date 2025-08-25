@@ -1,0 +1,11 @@
+{
+    "data": {
+        "user": {
+            "id": 7,
+            "name": "badr qaba",
+            "email": "backupbadr@email.com",
+            "email_verified_at": null
+        },
+        "token": "28|zzpMGvjoMKDlu3PfJX7rLydMLNMtODuy3dOqjoqRea0ca3fe"
+    }
+}

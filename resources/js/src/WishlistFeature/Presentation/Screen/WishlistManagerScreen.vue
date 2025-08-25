@@ -77,7 +77,7 @@ function onDeleteWishlist() {
 
 </script>
 <template>
-    <v-container class="d-flex justify-content-center pb-10">
+    <v-container class="d-flex justify-center align-center pb-10">
         <v-sheet class="product-sheet" rounded elevation="8" color="surface">
             <div v-if="store.isPageLoading">
                 <v-row>

@@ -36,7 +36,7 @@ class Product extends Model implements HasMedia
         $data = [];
 
         foreach ($this->getMedia(self::PRODUCT_IMAGES) as $media) {
-            $data = [
+            $data[] = [
                 "uuid" => $media->uuid,
                 "filename" => $media->file_name,
                 "preview" => $media->getUrl(self::MEDIA_CONVERSION),

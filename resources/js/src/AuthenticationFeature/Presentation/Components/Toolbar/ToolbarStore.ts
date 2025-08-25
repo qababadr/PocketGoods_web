@@ -30,6 +30,11 @@ export const useToolbarStore = defineStore("ToolbarStore", {
         },
     },
     actions: {
+        setIsDarkThemeFrom(string: string) {
+            this.$patch({
+                isDarkTheme: string === "lightTheme" ? false : true,
+            });
+        },
         openModal() {
             this.$patch({ isModalVisible: true });
         },

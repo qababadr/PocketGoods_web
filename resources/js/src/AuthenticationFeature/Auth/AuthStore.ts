@@ -97,12 +97,12 @@ export const useAuthStore = defineStore("AuthStore", {
         },
         reloadTheme() {
             this.$patch({
-                theme: this.theme === "darkTheme" ? "lightTheme" : "darkTheme",
+                theme: this.theme === "darkTheme" ? "darkTheme" : "lightTheme",
             });
         },
         toggleTheme(isDarkTheme: boolean) {
             this.$patch({
-                theme: isDarkTheme ? "lightTheme" : "darkTheme",
+                theme: isDarkTheme ? "darkTheme" : "lightTheme",
             });
         },
     },

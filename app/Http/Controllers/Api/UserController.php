@@ -133,7 +133,7 @@ class UserController extends Controller
 
                 return response([
                     'data' => [
-                        'wishlist_itemL_id' => $wishlistItem->id,
+                        'wishlist_item_id' => $wishlistItem->id,
                         'in_wishlist' => true,
                         'product' => new ProductResource($product)
                     ]
@@ -145,7 +145,7 @@ class UserController extends Controller
 
                 return response([
                     'data' => [
-                        'wishlist_itemL_id' => -1,
+                        'wishlist_item_id' => -1,
                         'in_wishlist' => false,
                         'product' => null
                     ]

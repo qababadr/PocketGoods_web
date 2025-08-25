@@ -50,7 +50,7 @@ export class ProductRepositoryImpl implements ProductRepository {
         const response = await ApiService.rawPost<
             PaginationResponseDTO<ProductPreviewDTO>
         >({
-            url: `product/search?=${page}`,
+            url: `product/search?page=${page}`,
             data: {
                 search_query: query,
             },

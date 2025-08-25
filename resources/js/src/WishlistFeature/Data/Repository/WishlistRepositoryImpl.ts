@@ -16,6 +16,7 @@ export class WishlistRepositoryImpl implements WishlistRepository {
         });
         return response.wishlist_item_id;
     }
+
     async getEntireWishlist(): Promise<WishlistItem[]> {
         const response = await ApiService.get<WishlistItemDTO[]>({
             url: "wishlist/list",

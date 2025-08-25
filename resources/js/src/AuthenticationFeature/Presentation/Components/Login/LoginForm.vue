@@ -53,7 +53,7 @@ function login() {
         </v-container>
         <v-container class="d-flex flex-column text-center">
             <div>
-                <v-btn variant="text" @click="emit('onToggleFormType')">
+                <v-btn v-bind="testAttr('toggle-form-btn')" variant="text" @click="emit('onToggleFormType')">
                     <span class="primary text-decoration-underline">Register now</span>
                 </v-btn>
             </div>

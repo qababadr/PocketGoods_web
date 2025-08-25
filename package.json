@@ -5,7 +5,10 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "ui-previews": "vite --config previews/vite.config.ts"
+        "ui-previews": "vite --config previews/vite.config.ts",
+        "cy:test-home-e2e": "npx cypress run --spec 'tests/cypress/e2e/HomeScreen.cy.ts' --browser chrome --headed DEBUG=cypress-vite",
+        "cy:test-product-detail-e2e": "npx cypress run --spec 'tests/cypress/e2e/ProductDetailScreen.cy.ts' --browser chrome --headed DEBUG=cypress-vite",
+        "cy:test-auth-e2e": "npx cypress run --spec 'tests/cypress/e2e/Authentication.cy.ts' --browser chrome --headed DEBUG=cypress-vite"
     },
     "devDependencies": {
         "@iconify/vue": "^5.0.0",

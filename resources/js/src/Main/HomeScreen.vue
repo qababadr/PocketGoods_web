@@ -19,7 +19,7 @@ const snackbarController = useSnackbarControllerStore();
 const router = useRouter();
 
 onMounted(async () => {
-    productStore.getProducts({
+    await productStore.getProducts({
         onPaginationError() {
             snackbarController.setSeverity(SnackbarSeverity.Error)
                 .setContentProps({

@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { Constants } from '../Util/constants';
-import Logo from './Logo.vue';
-import LottiePlayer from './LottiePlayer.vue';
-import AnimatedIllustration from '@src/CoreUI/Assets/animated_background.json';
+import Logo from "./Logo.vue";
+import AnimatedIllustration from '@src/CoreUI/Assets/animated_background.json'
+import LottiePlayer from "./LottiePlayer.vue";
+import { useRouter } from "vue-router";
+import { Constants } from "../Util/constants";
 
 const router = useRouter();
+
+function navigateToHomeScreen() {
+    try {
+        router.push({ name: Constants.SCREENS.HomeScreen })
+    } catch {
+        return;
+    }
+}
 </script>
 <template>
     <div class="header-container elevation-12" width="w-100">
@@ -19,12 +27,14 @@ const router = useRouter();
             <v-col cols="8">
                 <v-row align="center" class="py-2">
                     <div>
-                        <Logo @click="router.push({ name: Constants.SCREENS.HomeScreen })" />
+                        <Logo @click="navigateToHomeScreen" />
                     </div>
                     <slot name="search-input" />
                 </v-row>
             </v-col>
+
             <v-col cols="4" class="pr-10 mt-10">
+                <!-- <Toolbar /> -->
                 <slot name="toolbar" />
             </v-col>
         </v-row>
@@ -85,7 +95,7 @@ const router = useRouter();
     }
 
     100% {
-        width: white;
+        color: white;
     }
 }
 
@@ -101,7 +111,7 @@ const router = useRouter();
     animation-fill-mode: forwards;
     background: var(--bgColor);
     line-height: var(--lineHeight);
-    max-width: var(--lineHeight);
+    max-height: var(--lineHeight);
     overflow: hidden;
     position: relative;
     width: var(--width);
@@ -109,8 +119,9 @@ const router = useRouter();
 
 .typewriter::before {
     content: "";
-    animation: type var(--timePerLine) linear infinite,
-        carriageReturn var(--time) steps(var(--lines), var(--lines)),
+    animation:
+        type var(--timePerLine) linear infinite,
+        carriageReturn var(--time) steps(var(--lines)) var(--lines),
         caret 0.5s steps(2) infinite;
     background: var(--bgColor);
     bottom: 0;
@@ -128,7 +139,7 @@ section {
     position: absolute;
     top: 140px;
     width: 100%;
-    columns: white;
+    color: white;
     font-size: x-large;
 }
 
@@ -137,7 +148,8 @@ section {
     --timePerLine: 6s;
 }
 
-/* Large Screen */
+
+/* Large screens (e.g. desktops) */
 @media (min-width: 1200px) {
     .lottiePlayer {
         width: 700px;
@@ -150,7 +162,7 @@ section {
     }
 }
 
-/* Medium screen */
+/* Medium screens (e.g. tablets) */
 @media (max-width: 1199px) and (min-width: 768px) {
     .lottiePlayer {
         width: 550px;
@@ -167,7 +179,7 @@ section {
     }
 }
 
-/* Small screen */
+/* Small screens (e.g. landscape phones) */
 @media (max-width: 767px) and (min-width: 480px) {
     .lottiePlayer {
         display: none;
@@ -188,8 +200,8 @@ section {
     }
 }
 
-/* Extra Small screen */
-@media (max-width: 470px) {
+/* Extra small screens (e.g. portrait phones) */
+@media (max-width: 479px) {
     .lottiePlayer {
         display: none;
     }

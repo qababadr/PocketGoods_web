@@ -6,32 +6,12 @@ import { ProductPreviewDTO } from "../DTO/ProductPreviewDTO";
 import { toImage } from "./ImageMapper";
 
 export const toProductPreview = (dto: ProductPreviewDTO) => {
-    const {
-        id,
-        title,
-        category,
-        price,
-        thumbnail
-    } = dto;
-    return new ProductPreview(
-        id,
-        title,
-        category,
-        price,
-        thumbnail
-    );
-}
+    const { id, title, category, price, thumbnail } = dto;
+    return new ProductPreview(id, title, category, price, thumbnail);
+};
 
 export const toProduct = (dto: ProductDTO) => {
-    const {
-        id,
-        title,
-        category,
-        price,
-        quantity,
-        description,
-        media,
-    } = dto;
+    const { id, title, category, price, quantity, description, media } = dto;
 
     return new Product(
         id,
@@ -40,6 +20,6 @@ export const toProduct = (dto: ProductDTO) => {
         price,
         quantity,
         description,
-        media.map((imageDTO: ImageDTO) => toImage(imageDTO)),
+        media.map((imageDTO: ImageDTO) => toImage(imageDTO))
     );
-}
+};

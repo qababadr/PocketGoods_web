@@ -1,0 +1,24 @@
+{
+    "data": {
+        "id": 1,
+        "title": "Sunglasses",
+        "category": "Accessories",
+        "price": "20.99",
+        "quantity": 100,
+        "media": [
+            {
+                "uuid": "9837ee14-758a-4052-97cd-83c9ee4c2fdc",
+                "file_name": "aviator-sunglasses-2592111_1280_image-by-sandeep-handa-from-pixabay.jpg",
+                "preview": "/media\/1\/conversions\/aviator-sunglasses-2592111_1280_image-by-sandeep-handa-from-pixabay-thumbnail.jpg",
+                "original": "/media\/1\/aviator-sunglasses-2592111_1280_image-by-sandeep-handa-from-pixabay.jpg"
+            },
+            {
+                "uuid": "48423fd0-5b18-4604-846f-3c9e72d19056",
+                "file_name": "sunglasses-178151_1280image-by-pawet-ludzinski-from-pixabay.jpg",
+                "preview": "/media\/2\/conversions\/sunglasses-178151_1280image-by-pawet-ludzinski-from-pixabay-thumbnail.jpg",
+                "original": "/media\/2\/sunglasses-178151_1280image-by-pawet-ludzinski-from-pixabay.jpg"
+            }
+        ],
+        "description": "Stylish sunglasses for a sunny day."
+    }
+}

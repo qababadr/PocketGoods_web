@@ -43,7 +43,8 @@ const wishlistButtonLabel = computed(() => {
     return 'add to wishlist'
 });
 
-function onToggleWishlist(productId: number) {
+function onToggleWishlist() {
+    const productId = Number.parseInt(route.params.id as string)
     wishlistStore.toggleWishlist({
         productId: productId,
         onAdded(insertedWishlistId) {
@@ -95,7 +96,7 @@ function onToggleWishlist(productId: number) {
                                 <v-col cols="12" class="text-center">
                                     <span class="text-primary font-weight-bold text-subtitle-1">{{
                                         productStore.product.title
-                                        }}</span>
+                                    }}</span>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -109,7 +110,7 @@ function onToggleWishlist(productId: number) {
                                     <span class="text-primary font-weight-bold text-subtitle-2">Description</span>
                                     <span class="text-subtitle-2">{{
                                         productStore.product.description
-                                    }}</span>
+                                        }}</span>
                                     <span class="text-caption" v-if="productStore.product.inStock"><strong
                                             class="text-success">{{
                                                 productStore.product.quantity

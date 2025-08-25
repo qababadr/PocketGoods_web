@@ -9,6 +9,8 @@ import Message from '@src/CoreUI/Components/Message.vue';
 import { useRouter } from 'vue-router';
 import { Constants } from '@src/CoreUI/Util/constants';
 import { useAuthStore } from '@src/AuthenticationFeature/Auth/AuthStore';
+import LoginForm from '../Login/LoginForm.vue';
+import RegisterForm from '../Register/RegisterForm.vue';
 
 const toolbarStore = useToolbarStore()
 const snackbarController = useSnackbarControllerStore()
@@ -16,6 +18,8 @@ const router = useRouter()
 const auth = useAuthStore()
 
 function showAuthenticatedFeedback() {
+    toolbarStore.closeModal();
+    toolbarStore.setIsDarkThemeFrom(auth.theme);
     snackbarController
         .setSeverity(SnackbarSeverity.Success)
         .setContentProps({
@@ -62,13 +66,13 @@ async function checkAuthenticatedUser() {
 
 </script>
 <template>
-    <v-row just="end" v-if="auth.isAuthenticated" align="center" class="pr-2">
+    <v-row justify="end" v-if="auth.isAuthenticated" align="center" class="pr-2">
         <user-menu :wishlist-count="auth.authenticatedUser?.wishlist?.length ?? 0" :initials="auth.userInitials"
             :is-dark-theme="toolbarStore.isDarkTheme"
             @on-wishlist-click="navigate(Constants.SCREENS.WishlistManagerScreen)" @on-logged-out="onLoggedOut"
             @on-toggle-theme="onToggleTheme" @on-click="checkAuthenticatedUser" />
     </v-row>
-    <v-row just="end" v-else>
+    <v-row justify="end" v-else>
         <v-btn v-bind="testAttr('login-modal-button')" append-icon="mdi-login" variant="text" color="white"
             @click="toolbarStore.openModal()">
             Login
