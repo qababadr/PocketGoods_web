@@ -42,16 +42,21 @@ describe("Should navigate to product detail screen", () => {
     });
 });
 
-describe("Should add and remove a product from wishlist after authentication", () => {
+describe("Can add and remove a product from wishlist after authentication", () => {
     beforeEach(() => {
         cy.launchHomeScreen();
     });
 
-    it("Authenticate and assert is authenticated and user can toggle wishlist", () => {
-        cy.login();
+    it("Authenticate and should toggle wishlist", () => {
+        cy.sendLoginRequest("backupbadr@email.com", "Password@1");
+        cy.assertCanLoginWithCorrectCredentials();
 
-        cy.wait(600);
+        cy.wait(500);
 
-        cy.assertCanToggleWishlist(1, 2);
+        cy.sendToggleWishlistRequest(1, true);
+        cy.clickAndAssertProductIsAddedToWishlist(0, 1);
+
+        cy.sendToggleWishlistRequest(1, false);
+        cy.clickAndAssertProductIsRemovedFromWishlist(0, 1);
     });
 });

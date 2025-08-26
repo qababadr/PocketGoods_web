@@ -73,7 +73,7 @@
   "meta": {
     "current_page": 1,
     "from": 1,
-    "last_page": 2,
+    "last_page": 1,
     "path": "/api/products",
     "per_page": 9,
     "to": 9,

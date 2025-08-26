@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { testAttr } from '@src/Core';
 import ThemeSwitch from '@src/CoreUI/Components/ThemeSwitch.vue';
 import { mergeProps } from 'vue';
 
@@ -25,7 +26,8 @@ const props = defineProps<Props>()
                 <template v-slot:activator="{ props: tooltip }">
                     <v-btn icon v-bind="mergeProps(menu, tooltip)" @click="emit('onClick')">
                         <v-avatar color="primary-variant">
-                            <span class="text-body-2 text-on-primary-variant font-weight-bold">
+                            <span v-bind="testAttr('user-menu')"
+                                class="text-body-2 text-on-primary-variant font-weight-bold">
                                 {{ props.initials }}
                             </span>
                         </v-avatar>

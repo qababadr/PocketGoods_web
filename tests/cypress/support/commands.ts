@@ -26,13 +26,34 @@ declare global {
 
             navigateToProductDetails(index: number): Chainable<void>;
 
-            login(): Chainable<void>;
+            sendLoginRequest(email: string, password: string): Chainable<void>;
 
-            register(): Chainable<void>;
+            assertCanLoginWithCorrectCredentials(): Chainable<void>;
 
-            assertUserHasCorrectWishlist(): Chainable<void>;
+            assertCannotLoginWithInCorrectCredentials(): Chainable<void>;
 
-            assertCanToggleWishlist(
+            sendRegisterRequest(
+                fullname: string,
+                email: string,
+                password: string,
+                passwordConfirmation: string
+            ): Chainable<void>;
+
+            assertCanRegister(fullname: string): Chainable<void>;
+
+            assertCannotRegisterWhenEmailExist(): Chainable<void>;
+
+            sendToggleWishlistRequest(
+                productId: number,
+                shouldAdd: boolean
+            ): Chainable<void>;
+
+            clickAndAssertProductIsAddedToWishlist(
+                productIndex: number,
+                productId: number
+            ): Chainable<void>;
+
+            clickAndAssertProductIsRemovedFromWishlist(
                 productIndex: number,
                 productId: number
             ): Chainable<void>;

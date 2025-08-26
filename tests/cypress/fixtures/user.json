@@ -1,10 +1,11 @@
 {
     "data": {
         "user": {
-            "id": 7,
+            "id": 6,
             "name": "badr qaba",
             "email": "backupbadr@email.com",
-            "email_verified_at": null
+            "email_verified_at": null,
+            "wishlist": []
         },
         "token": "28|zzpMGvjoMKDlu3PfJX7rLydMLNMtODuy3dOqjoqRea0ca3fe"
     }

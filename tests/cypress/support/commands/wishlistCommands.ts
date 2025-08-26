@@ -2,13 +2,45 @@ import { Interception } from "node_modules/cypress/types/net-stubbing";
 
 const apiURL = Cypress.env("apiURL");
 
-Cypress.Commands.add(
-    "assertCanToggleWishlist",
-    (productIndex: number, productId: number) => {
-        cy.intercept("GET", `${apiURL}/wishlist/toggle/${productId}`).as(
-            "toggleWishlist"
-        );
+let addedToWishlistFixture: any;
+let removedFromWishlistFixture: any;
 
+beforeEach(() => {
+    cy.fixture("added_to_wishlist_response.json").then((data: any) => {
+        addedToWishlistFixture = data;
+    });
+
+    cy.fixture("removed_from_wishlist_response.json").then((data: any) => {
+        removedFromWishlistFixture = data;
+    });
+});
+
+Cypress.Commands.add(
+    "sendToggleWishlistRequest",
+    (productId: number, shouldAdd: boolean) => {
+        cy.intercept(
+            "GET",
+            `${apiURL}/wishlist/toggle/${productId}`,
+            (request) => {
+                if (shouldAdd) {
+                    request.reply({
+                        statusCode: 200,
+                        body: addedToWishlistFixture,
+                    });
+                } else {
+                    request.reply({
+                        statusCode: 200,
+                        body: removedFromWishlistFixture,
+                    });
+                }
+            }
+        ).as("toggleWishlistRequest");
+    }
+);
+
+Cypress.Commands.add(
+    "clickAndAssertProductIsAddedToWishlist",
+    (productIndex: number, productId) => {
         cy.get(".product-card")
             .eq(productIndex)
             .scrollIntoView()
@@ -18,8 +50,8 @@ Cypress.Commands.add(
             .find("button")
             .click();
 
-        cy.wait("@toggleWishlist").then((response: Interception) => {
-            expect(response?.response?.statusCode).to.eq(200);
+        cy.wait("@toggleWishlistRequest").then((response: Interception) => {
+            expect(response.response?.statusCode).to.eq(200);
 
             const stored = localStorage.getItem("auth_storage_key");
             expect(stored, "The user data must be cached").to.not.be.null;
@@ -31,14 +63,14 @@ Cypress.Commands.add(
 
                     expect(
                         authenticatedUser.wishlist,
-                        "The wishlist should be an array"
+                        "The wishlist should not be an array"
                     ).to.be.an("array");
 
-                    const inWishlist = authenticatedUser.wishlist.some(
+                    const isInWishlist = authenticatedUser.wishlist.some(
                         (item: any) => item.productId === productId
                     );
 
-                    expect(inWishlist, "Product must be in wishlist").to.be
+                    expect(isInWishlist, "Product must be in wishlist").to.be
                         .true;
 
                     cy.get(".product-card")
@@ -47,46 +79,45 @@ Cypress.Commands.add(
                         .find("i")
                         .should("have.class", "mdi-heart");
                 } catch (error) {
-                    throw new Error(
-                        `Failed to parse user from localstorage: ${error}`
-                    );
+                    throw new Error(`Error occurred: ${error}`);
                 }
             }
         });
+    }
+);
 
-        cy.wait(1000);
-
+Cypress.Commands.add(
+    "clickAndAssertProductIsRemovedFromWishlist",
+    (productIndex: number, productId: number) => {
         cy.get(".product-card")
             .eq(productIndex)
             .scrollIntoView()
+            .trigger("mouseleave")
             .trigger("mouseenter")
             .find(".product-menu-action.visible-menu")
             .should("be.visible")
             .find("button")
             .click();
 
-        cy.wait("@toggleWishlist").then((response: Interception) => {
-            expect(response?.response?.statusCode).to.eq(200);
+        cy.wait("@toggleWishlistRequest").then((response: Interception) => {
+            expect(response.response?.statusCode).to.eq(200);
 
             const stored = localStorage.getItem("auth_storage_key");
-            expect(stored, "The user data must be cached").to.not.be.null;
+            expect(stored, "The user must be cached").to.not.be.null;
 
             if (stored) {
                 try {
                     const parsed = JSON.parse(stored);
                     const authenticatedUser = parsed.authenticatedUser;
 
-                    expect(
-                        authenticatedUser.wishlist,
-                        "The wishlist should be an array"
-                    ).to.be.an("array");
-
-                    const inWishlist = authenticatedUser.wishlist.some(
+                    const isInWishlist = authenticatedUser.wishlist.some(
                         (item: any) => item.productId === productId
                     );
 
-                    expect(inWishlist, "Product must not be in wishlist").to.be
-                        .false;
+                    expect(
+                        isInWishlist,
+                        "Product must be removed from wishlist"
+                    ).to.be.false;
 
                     cy.get(".product-card")
                         .eq(productIndex)
@@ -94,9 +125,7 @@ Cypress.Commands.add(
                         .find("i")
                         .should("have.class", "mdi-heart-outline");
                 } catch (error) {
-                    throw new Error(
-                        `Failed to parse user from localstorage: ${error}`
-                    );
+                    throw new Error(`Error occurred: ${error}`);
                 }
             }
         });
